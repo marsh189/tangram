@@ -16,6 +16,7 @@ public class Piece : MonoBehaviour
     [Header("Completion Checks")]
     public bool correct = false;
     public List<Transform> finalPositions;
+    public GameManager gameManager;
 
     [Header("Audio")]
     AudioSource source;
@@ -66,28 +67,37 @@ public class Piece : MonoBehaviour
 
     void OnMouseDown() //mouse has clicked on this piece
     {
-        source.PlayOneShot(selectedAudio);
-        zCoord = Camera.main.WorldToScreenPoint(transform.position).z; //get piece's z coordinate in screenpoint
-        offset = transform.position - GetMouseWorldPos(); //set offset between piece and mouse position
-        selected = true;
-        correct = false;
+        if (!gameManager.levelFinished)
+        {
+            source.PlayOneShot(selectedAudio);
+            zCoord = Camera.main.WorldToScreenPoint(transform.position).z; //get piece's z coordinate in screenpoint
+            offset = transform.position - GetMouseWorldPos(); //set offset between piece and mouse position
+            selected = true;
+            correct = false;
+        }
     }
 
     void OnMouseDrag() //mouse button is down and mouse is moving
     {
-        //get mouse's world position and set the piece position to newPos
-        Vector3 newPos = GetMouseWorldPos() + offset;
-        newPos.y = yOffset;
-        transform.position = newPos;
+        if (!gameManager.levelFinished)
+        {
+            //get mouse's world position and set the piece position to newPos
+            Vector3 newPos = GetMouseWorldPos() + offset;
+            newPos.y = yOffset;
+            transform.position = newPos;
+        }
     }
 
     void OnMouseUp() //mouse button let go
     {
-        //drop piece
-        Vector3 newPos = transform.position;
-        newPos.y = 0;
-        transform.position = newPos;
-        selected = false;
+        if (!gameManager.levelFinished)
+        {
+            //drop piece
+            Vector3 newPos = transform.position;
+            newPos.y = 0;
+            transform.position = newPos;
+            selected = false;
+        }
     }
 
     Vector3 GetMouseWorldPos()
