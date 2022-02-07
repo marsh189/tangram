@@ -9,14 +9,18 @@ public class GameManager : MonoBehaviour
 
     public List<Piece> pieces;
     public AudioClip levelCompletedAudio;
+    public AudioClip popAudio;
     public CanvasGroup finishedScreen;
+    public GameObject titleText;
     public float fadeSpeed = 5f;
+    public int instructionsFollowed;
 
     public bool levelFinished = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        instructionsFollowed = 0;
         finishedScreen.alpha = 0;
         finishedScreen.interactable = false;
     }
@@ -31,6 +35,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Level Finished");
                 pieces[0].GetComponent<AudioSource>().PlayOneShot(levelCompletedAudio);
                 levelFinished = true;
+                titleText.SetActive(false);
             }
 
             if(finishedScreen.alpha < 1)
@@ -60,5 +65,10 @@ public class GameManager : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Menu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }

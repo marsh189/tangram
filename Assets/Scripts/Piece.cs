@@ -24,10 +24,18 @@ public class Piece : MonoBehaviour
     public AudioClip rotateAudio;
     public AudioClip correctAudio;
 
+    [Header("Instructions")]
+    public GameObject moveInstructions;
+    public GameObject rotateInstructions;
+    
+
 
     void Start()
     {
         source = GetComponent<AudioSource>();
+        moveInstructions.SetActive(true);
+        rotateInstructions.SetActive(false);
+        gameManager.instructionsFollowed = 0;
     }
     void Update()
     {
@@ -63,6 +71,7 @@ public class Piece : MonoBehaviour
                 }
             }
         }
+
     }
 
     void OnMouseDown() //mouse has clicked on this piece
@@ -74,6 +83,13 @@ public class Piece : MonoBehaviour
             offset = transform.position - GetMouseWorldPos(); //set offset between piece and mouse position
             selected = true;
             correct = false;
+
+            if(gameManager.instructionsFollowed < 1)
+            {
+                gameManager.instructionsFollowed++;
+                moveInstructions.SetActive(false);
+                rotateInstructions.SetActive(true);
+            }
         }
     }
 
@@ -114,6 +130,13 @@ public class Piece : MonoBehaviour
         Vector3 newRotation = transform.eulerAngles;
         newRotation.y += rotationAmount;
         transform.eulerAngles = newRotation;
+
+        if (gameManager.instructionsFollowed < 2)
+        {
+            gameManager.instructionsFollowed++;
+            moveInstructions.SetActive(false);
+            rotateInstructions.SetActive(false);
+        }
     }
 
     public void RotateLeft()
@@ -122,6 +145,13 @@ public class Piece : MonoBehaviour
         Vector3 newRotation = transform.eulerAngles;
         newRotation.y -= rotationAmount;
         transform.eulerAngles = newRotation;
+
+        if (gameManager.instructionsFollowed < 2)
+        {
+            gameManager.instructionsFollowed++;
+            moveInstructions.SetActive(false);
+            rotateInstructions.SetActive(false);
+        }
     }
 
 }
