@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
                 titleText.SetActive(false);
             }
 
+
+            //fade in the finished screen panel
             if(finishedScreen.alpha < 1)
             {
                 finishedScreen.alpha += Time.deltaTime * fadeSpeed;
@@ -64,11 +66,11 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); //reload current scene
     }
 
-    public void Menu()
+    public void LoadSceneName(string name)
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(name); //Load the scene with the given name
     }
 }

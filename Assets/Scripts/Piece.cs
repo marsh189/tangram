@@ -84,7 +84,7 @@ public class Piece : MonoBehaviour
             selected = true;
             correct = false;
 
-            if(gameManager.instructionsFollowed < 1)
+            if(gameManager.instructionsFollowed < 1) //disable move instruction
             {
                 gameManager.instructionsFollowed++;
                 moveInstructions.SetActive(false);
@@ -128,10 +128,10 @@ public class Piece : MonoBehaviour
     {
         source.PlayOneShot(rotateAudio);
         Vector3 newRotation = transform.eulerAngles;
-        newRotation.y += rotationAmount;
+        newRotation.y += rotationAmount; //rotate the piece in the y Aixs by set rotation amount
         transform.eulerAngles = newRotation;
 
-        if (gameManager.instructionsFollowed < 2)
+        if (gameManager.instructionsFollowed < 2) //disable the rotation instruction
         {
             gameManager.instructionsFollowed++;
             moveInstructions.SetActive(false);
@@ -143,10 +143,10 @@ public class Piece : MonoBehaviour
     {
         source.PlayOneShot(rotateAudio);
         Vector3 newRotation = transform.eulerAngles;
-        newRotation.y -= rotationAmount;
+        newRotation.y -= rotationAmount; //rotate the piece in the y Axis by set rotation amount
         transform.eulerAngles = newRotation;
 
-        if (gameManager.instructionsFollowed < 2)
+        if (gameManager.instructionsFollowed < 2) //disable the rotation instruction
         {
             gameManager.instructionsFollowed++;
             moveInstructions.SetActive(false);
